@@ -1,42 +1,27 @@
-import React, { Component } from "react";
+import React, { useContext } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 import { ThemeContext } from "../contexts/ThemeContext";
 import { AuthContext } from "../contexts/AuthContext";
 
-class Navbar extends Component {
+const Navbar = () => {
+    const { isDarkTheme, darkTheme, lightTheme } = useContext(ThemeContext);
+    const { isLoggedIn, changeAuthStatus } = useContext(AuthContext);
+    const theme = isDarkTheme ? darkTheme : lightTheme;
 
-    render() {
-        
-        return (
-            <AuthContext.Consumer>
-                {(authContext) => {
-                    return (
-                        <ThemeContext.Consumer>
-                            {(themeContext) => {
-                                const { isDarkTheme, darkTheme, lightTheme } = themeContext;
-                                const { isLoggedIn, changeAuthStatus } = authContext;
-                                const theme = isDarkTheme ? darkTheme : lightTheme;
-                                return (
-                                    <View style={[styles.headerContainer, theme]}>
-                                        <Text style={[styles.headerText, theme]}>AWD | Elective Course at BTECH</Text>
-                                        <TouchableOpacity onPress={changeAuthStatus}>
-                                            <Text style={[styles.headerText, theme]}>{isLoggedIn ? 'Logged In' : 'Logged Out'}</Text>
-                                        </TouchableOpacity>
-                                        <View style={styles.headerTabContainer}>
-                                            <Text style={styles.headerTab}>Overview</Text>
-                                            <Text style={styles.headerTab}>Contact</Text>
-                                            <Text style={styles.headerTab}>Support</Text>
-                                        </View>
-                                    </View>
-                                );
-                            }}
-                        </ThemeContext.Consumer>
-                    );
-                }}
-            </AuthContext.Consumer>
-        );
-    }
+    return (
+        <View style={[styles.headerContainer, theme]}>
+            <Text style={[styles.headerText, theme]}>AWD | Elective Course at BTECH</Text>
+            <TouchableOpacity onPress={changeAuthStatus}>
+                <Text style={[styles.headerText, theme]}>{isLoggedIn ? 'Logged In' : 'Logged Out'}</Text>
+            </TouchableOpacity>
+            <View style={styles.headerTabContainer}>
+                <Text style={styles.headerTab}>Overview</Text>
+                <Text style={styles.headerTab}>Contact</Text>
+                <Text style={styles.headerTab}>Support</Text>
+            </View>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
