@@ -1,36 +1,28 @@
-import React, { Component } from "react";
+import React, { useContext } from "react";
 import { View , Text, StyleSheet, TouchableOpacity } from "react-native";
 
 import { ThemeContext } from "../contexts/ThemeContext";
 
-class TodoList extends Component {
+const TodoList = () => {
+    const { isDarkTheme, darkTheme, lightTheme, changeTheme }  = useContext(ThemeContext);
+    const theme = isDarkTheme ? darkTheme : lightTheme;
 
-    render() {
-        return (
-            <ThemeContext.Consumer>
-                {(context) => {
-                    const { isDarkTheme, darkTheme, lightTheme, changeTheme } = context;
-                    const theme = isDarkTheme ? darkTheme : lightTheme;
-                    return (
-                        <View style={[styles.todoContainer, theme]}>
-                            <Text style={[styles.item, theme]}>Define scope for the project</Text>
-                            <Text style={[styles.item, theme]}>Gather data and content</Text>
-                            <Text style={[styles.item, theme]}>Prepare design templates</Text>
-                            <Text style={[styles.item, theme]}>Go fo a walk and get some fresh air</Text>
-                            <Text style={[styles.item, theme]}>Perform design tests</Text>
-                            <Text style={[styles.item, theme]}>Add functionality</Text>
-                            <TouchableOpacity 
-                                style={styles.buttonContainer}
-                                onPress={changeTheme}
-                                >
-                                <Text style={styles.buttonText}>Change Theme</Text>
-                            </TouchableOpacity>
-                        </View>
-                    );
-                }}
-            </ThemeContext.Consumer>
-        );
-    }
+    return (
+        <View style={[styles.todoContainer, theme]}>
+            <Text style={[styles.item, theme]}>Define scope for the project</Text>
+            <Text style={[styles.item, theme]}>Gather data and content</Text>
+            <Text style={[styles.item, theme]}>Prepare design templates</Text>
+            <Text style={[styles.item, theme]}>Go fo a walk and get some fresh air</Text>
+            <Text style={[styles.item, theme]}>Perform design tests</Text>
+            <Text style={[styles.item, theme]}>Add functionality</Text>
+            <TouchableOpacity 
+                style={styles.buttonContainer}
+                onPress={changeTheme}
+                >
+                <Text style={styles.buttonText}>Change Theme</Text>
+            </TouchableOpacity>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
