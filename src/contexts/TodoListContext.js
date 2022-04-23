@@ -9,7 +9,7 @@ const TodoListContextProvider = ({children}) => {
         {text: 'Prepare design templates', id: '3'},
         {text: 'Go fo a walk and get some fresh air', id: '4'},
         {text: 'Perform design tests', id: '5'},
-        {text: 'Add functionalit', id: '6'}
+        {text: 'Add functionality', id: '6'}
     ]);
 
     return (

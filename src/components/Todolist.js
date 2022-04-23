@@ -1,20 +1,31 @@
 import React, { useContext } from "react";
-import { View , Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View , Text, StyleSheet, TouchableOpacity, FlatList } from "react-native";
 
 import { ThemeContext } from "../contexts/ThemeContext";
+import { TodoListContext } from "../contexts/TodoListContext";
 
 const TodoList = () => {
     const { isDarkTheme, darkTheme, lightTheme, changeTheme }  = useContext(ThemeContext);
     const theme = isDarkTheme ? darkTheme : lightTheme;
-
+    const { todos } = useContext(TodoListContext);
+    console.log(todos);
     return (
+        
         <View style={[styles.todoContainer, theme]}>
-            <Text style={[styles.item, theme]}>Define scope for the project</Text>
-            <Text style={[styles.item, theme]}>Gather data and content</Text>
-            <Text style={[styles.item, theme]}>Prepare design templates</Text>
-            <Text style={[styles.item, theme]}>Go fo a walk and get some fresh air</Text>
-            <Text style={[styles.item, theme]}>Perform design tests</Text>
-            <Text style={[styles.item, theme]}>Add functionality</Text>
+
+            { todos.length ? (
+                    <FlatList
+                        data={todos}
+                        keyExtractor={ (todo) => todo.id}
+                        renderItem={({item}) => {
+                            return (
+                                <Text style={[styles.listitem, theme]}>{item.text}</Text>
+                            )
+                        }}
+                        />
+                ) : (
+                    <Text style={[styles.item, theme]}>You don't have any todos</Text>
+                ) }
             <TouchableOpacity 
                 style={styles.buttonContainer}
                 onPress={changeTheme}
@@ -31,7 +42,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-around',
     },
-    item: {
+    listitem: {
         color: 'white',
         fontSize: 16,
         paddingVertical: 12,
