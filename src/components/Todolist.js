@@ -10,7 +10,7 @@ const TodoList = () => {
     const { isDarkTheme, darkTheme, lightTheme, changeTheme }  = useContext(ThemeContext);
     const theme = isDarkTheme ? darkTheme : lightTheme;
     
-    const { todos, addTodo } = useContext(TodoListContext);
+    const { todos, addTodo, removeTodo } = useContext(TodoListContext);
 
     const handleChange = (text) => {
         setTodo(text);
@@ -19,6 +19,9 @@ const TodoList = () => {
     const handleAddTodoPress = () => {
         addTodo(todo);
         setTodo('');
+    }
+    const handleRemoveTodo = (id) => {
+        removeTodo(id);
     }
 
     return (
@@ -32,7 +35,11 @@ const TodoList = () => {
                         keyExtractor={ (todo) => todo.id}
                         renderItem={({item}) => {
                             return (
-                                <Text style={[styles.listitem, theme]}>{item.text}</Text>
+                                <TouchableOpacity
+                                    onPress={() => handleRemoveTodo(item.id)}
+                                >
+                                    <Text style={[styles.listitem, theme]}>{item.text}</Text>
+                                </TouchableOpacity>
                             )
                         }}
                         />
@@ -48,13 +55,13 @@ const TodoList = () => {
                 <TouchableOpacity 
                     style={styles.buttonContainer}
                     onPress={handleAddTodoPress}
-                    >
+                >
                     <Text style={styles.buttonText}>Add New Todo</Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
                     style={styles.buttonContainer}
                     onPress={changeTheme}
-                    >
+                >
                     <Text style={styles.buttonText}>Change Theme</Text>
                 </TouchableOpacity>
         </View>
@@ -80,6 +87,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 15,
+        marginBottom: 30
     },
     buttonText: {
         color: '#FFFFFF',
