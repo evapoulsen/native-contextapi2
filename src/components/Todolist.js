@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import { View , Text, StyleSheet, TouchableOpacity, FlatList, TextInput } from "react-native";
 
-
 import { ThemeContext } from "../contexts/ThemeContext";
 import { TodoListContext } from "../contexts/TodoListContext";
 
@@ -20,12 +19,12 @@ const TodoList = () => {
         addTodo(todo);
         setTodo('');
     }
+
     const handleRemoveTodo = (id) => {
         removeTodo(id);
     }
 
     return (
-        
         <View style={[styles.todoContainer, theme]}>
 
             { todos.length ? (
