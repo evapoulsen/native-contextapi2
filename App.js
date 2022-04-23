@@ -7,7 +7,7 @@ import AuthContextProvider from "./src/contexts/AuthContext";
 import TodoListContextProvider from "./src/contexts/TodoListContext";
 const App = () => {
   return (
-    <View>
+    <View style={{flex: 1}}>
       <AuthContextProvider>
         <ThemeContextProvider>
           <TodoListContextProvider>
