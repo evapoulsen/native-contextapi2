@@ -1,9 +1,20 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useReducer } from "react";
 
 export const TodoListContext = createContext();
 
+const todosReducer = (state, action) => {
+    switch(action.type) {
+        case 'ADD_TODO':
+            return [...state, {text: action.text, id: `${Math.random()}`}]
+        case 'REMOVE_TODO':
+            return state.filter((todo) => todo.id !== action.id )
+        default:
+            return state;
+    }
+}
+
 const TodoListContextProvider = ({children}) => {
-    const [todos, setTodos] = useState([
+    const [todos, dispatch] = useReducer(todosReducer, [
         {text: 'Define scope for the project', id: '1'},
         {text: 'Gather data and content', id: '2'},
         {text: 'Prepare design templates', id: '3'},
@@ -12,21 +23,8 @@ const TodoListContextProvider = ({children}) => {
         {text: 'Add functionality', id: '6'}
     ]);
 
-    const addTodo = (todo) => {
-        setTodos([...todos, {text: todo, id: `${Math.random()}`}]);
-    };
-
-    const removeTodo = (id) => {
-        setTodos(todos.filter((todo) => {
-            return (
-                todo.id !== id
-            );
-        }));
-    }
-
-
     return (
-        <TodoListContext.Provider value={{ todos , addTodo, removeTodo }}>
+        <TodoListContext.Provider value={{ todos , dispatch }}>
             {children}
         </TodoListContext.Provider>
     );

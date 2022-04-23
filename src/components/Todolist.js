@@ -9,19 +9,19 @@ const TodoList = () => {
     const { isDarkTheme, darkTheme, lightTheme, changeTheme }  = useContext(ThemeContext);
     const theme = isDarkTheme ? darkTheme : lightTheme;
     
-    const { todos, addTodo, removeTodo } = useContext(TodoListContext);
+    const { todos,dispatch } = useContext(TodoListContext);
 
     const handleChange = (text) => {
         setTodo(text);
     }
 
     const handleAddTodoPress = () => {
-        addTodo(todo);
+        dispatch({type: 'ADD_TODO', text: todo});
         setTodo('');
     }
 
     const handleRemoveTodo = (id) => {
-        removeTodo(id);
+        dispatch({type: 'REMOVE_TODO', id});
     }
 
     return (
